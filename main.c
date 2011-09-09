@@ -87,7 +87,7 @@ typedef union longConverter{
     uchar   b[sizeof(addr_t)];
 }longConverter_t;
 
-static uchar            requestBootLoaderExit = 0;
+unsigned int timeout = 0;
 static longConverter_t  currentAddress; /* in bytes */
 static uchar            bytesRemaining;
 static uchar            isLastPage;
@@ -198,7 +198,7 @@ static uchar    replyBuffer[4];
         }
 #if BOOTLOADER_CAN_EXIT
     }else if(rq->bRequest == USBASP_FUNC_DISCONNECT){
-        requestBootLoaderExit = 1;      /* allow proper shutdown/close of connection */
+        timeout = 100;      /* allow proper shutdown/close of connection */
 #endif
     }else{
         /* ignore: USBASP_FUNC_CONNECT */
@@ -306,26 +306,28 @@ int main(void)
     GICR = (1 << IVSEL); /* move interrupts to boot flash section */
 #endif
 
-	DDRD |= (1 << 4); // pull D- low to disconnect from bus
-	delay_ms(100);
+	usbDeviceDisconnect();
+	_delay_ms(100);
 	
-    uchar i = 0, j = 0;
-    
-    DDRB |= (1<<0);
-	PORTB |= (1<<0);
-	
+    unsigned char i = 0;
+    timeout = 8192;
 	
     initForUsbConnectivity();
     
+    DDRB |= (1<<0);
+	PORTB |= (1<<0);
+    
     for (;;) { // main loop
         usbPoll();
-        
-#if BOOTLOADER_CAN_EXIT
-        if (requestBootLoaderExit) break;
-#endif
+
+		if (++i == 0){
+			if (--timeout == 0) break;
+			if (timeout % 64 == 0 && timeout % 1024 > 256) PORTB ^= 1;
+		}
     }
     
     usbDeviceDisconnect();
+	_delay_ms(100);
     leaveBootloader();
     return 0;
 }

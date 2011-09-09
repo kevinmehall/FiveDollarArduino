@@ -147,10 +147,8 @@ static inline void  bootLoaderInit(void)
 
 static inline void  bootLoaderExit(void)
 {
-    PORTD = 0;                      /* undo bootLoaderInit() changes */
+	PORTD = 0;                      /* undo bootLoaderInit() changes */
     PORTB = 0;
-    DDRD |= (1 << USB_CFG_PULLUP_BIT); // Disconnect from USB
-    delay_ms(100);
     DDRD = 0;
     DDRB = 0;
     
