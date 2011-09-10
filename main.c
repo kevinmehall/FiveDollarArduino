@@ -24,6 +24,9 @@ void usbEventResetReady(void);
 #include "usbdrv/usbdrv.c"
 #include "osccal.c"
 
+#define EEPROM_LOC (unsigned char*)1023
+#define EEPROM_VALID_MAGIC 0x3b
+
 /* ------------------------------------------------------------------------ */
 
 /* Request constants used by USBasp */
@@ -298,6 +301,10 @@ int main(void)
     
     CLKPR=0x80;
 	CLKPR=0;
+	
+	if (eeprom_read_byte(EEPROM_LOC-1) == EEPROM_VALID_MAGIC){
+		OSCCAL = eeprom_read_byte(EEPROM_LOC);
+	}
     
     bootLoaderInit();
     
@@ -307,7 +314,7 @@ int main(void)
 #endif
 
 	usbDeviceDisconnect();
-	_delay_ms(100);
+	_delay_ms(250);
 	
     unsigned char i = 0;
     timeout = 8192;
@@ -327,13 +334,17 @@ int main(void)
     }
     
     usbDeviceDisconnect();
-	_delay_ms(100);
+	_delay_ms(250);
     leaveBootloader();
     return 0;
 }
 
 void usbEventResetReady(void){
+	//cli();
 	calibrateOscillator();
+	//sei();
+    eeprom_write_byte(EEPROM_LOC, OSCCAL);
+    eeprom_write_byte(EEPROM_LOC-1, EEPROM_VALID_MAGIC);
 }
 
 /* ------------------------------------------------------------------------ */
