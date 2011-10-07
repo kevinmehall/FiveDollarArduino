@@ -1,5 +1,4 @@
 
-
 Part						| Quantity	| Price          
 ----------------------------|-----------|-----------
 [ATMega328P][m328]			| 1			|   $3.50
@@ -15,6 +14,6 @@ Part						| Quantity	| Price
 [zener]:  http://www.mouser.com/ProductDetail/Vishay-Semiconductors/TZX3V6B-TR/?qs=sGAEpiMZZMstCHp3EWKGl7RSz%2fWB%252byfUzj1dlaRIOlE%3d
 [r68]:    http://www.mouser.com/ProductDetail/KOA-Speer/MF1-4LCT52R680G/?qs=sGAEpiMZZMtlubZbdhIBIBiU%2fdU%2f2aMB1xPBVtNu2R8%3d
 [r1.7k]:  http://www.mouser.com/ProductDetail/KOA-Speer/MF1-4DCT52R1691F/?qs=sGAEpiMZZMu61qfTUdNhG%2fDQawzJ6c7PWJhFAzJn3pU%3d
-[01ufcap]: 
+[01ufcap]: http://www.mouser.com/ProductDetail/Kemet/C410C104M5U5TA/?qs=sGAEpiMZZMsh%252b1woXyUXj2z72mclww%2fl0vkmr3Aal0o%3d
 [switch]: http://www.mouser.com/ProductDetail/BI-Technologies/SWT6-V7R/?qs=sGAEpiMZZMsgGjVA3toVBFZVAD4DJSz41CiMuGZOmsE%3d
 [usb]:    http://www.monoprice.com/products/product.asp?c_id=103&cp_id=10303&cs_id=1030303&p_id=5443&seq=1&format=2
