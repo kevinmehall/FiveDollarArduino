@@ -317,7 +317,7 @@ int main(void)
 	_delay_ms(250);
 	
     unsigned char i = 0;
-    timeout = 8192;
+    timeout = 24000;
 	
     initForUsbConnectivity();
     
